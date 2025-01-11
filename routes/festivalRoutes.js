@@ -6,6 +6,7 @@ const Festival = require("../models/Festival");
 const Purohit = require("../models/purohit");
 const Product = require("../models/Product");
 const addcart = require("../models/addcart");
+const essentilas = require("../models/essentilas");
 const userSchema = require("../models/userSchema");
 
 // Route to get today's festival
@@ -234,6 +235,66 @@ router.post("/addproducts", async (req, res) => {
       .json({ error: "Error adding product data", details: error.message });
   }
 });
+/// Route to add a new product
+router.post("/addwomenproducts", async (req, res) => {
+  const { category, collection, productname, sizes, price, vendor } = req.body;
+  console.log("Received data:", req.body); // Log incoming data
+  try {
+    // Validate input data
+    if (!category || !collection || !productname || !sizes || !price || !vendor) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    const newProduct = new Product({
+      category,
+      collection,
+      productname,
+      sizes,
+      price,
+      vendor,
+    });
+    await newProduct.save();
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: newProduct });
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res
+      .status(500)
+      .json({ error: "Error adding product data", details: error.message });
+  }
+});
+/// Route to add a new product
+router.post("/addchildproducts", async (req, res) => {
+  const { category, collection, productname, sizes, price, vendor } = req.body;
+  console.log("Received data:", req.body); // Log incoming data
+  try {
+    // Validate input data
+    if (!category || !collection || !productname || !sizes || !price || !vendor) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    const newProduct = new Product({
+      category,
+      collection,
+      productname,
+      sizes,
+      price,
+      vendor,
+    });
+    await newProduct.save();
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: newProduct });
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res
+      .status(500)
+      .json({ error: "Error adding product data", details: error.message });
+  }
+});
+
+
 
 
 // Route to get products by category
@@ -305,6 +366,35 @@ router.post("/addcart", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error adding cart data", details: error.message });
+  }
+});
+
+
+router.post("/addessentproducts", async (req, res) => {
+  const { category, collection, productname, price, vendor } = req.body;
+  console.log("Received data:", req.body); // Log incoming data
+  try {
+    // Validate input data
+    if (!category || !collection || !productname|| !price || !vendor) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    const newProduct = new essentilas({
+      category,
+      collection,
+      productname,
+      price,
+      vendor,
+    });
+    await newProduct.save();
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: newProduct });
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res
+      .status(500)
+      .json({ error: "Error adding product data", details: error.message });
   }
 });
 
